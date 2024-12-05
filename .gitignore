@@ -56,4 +56,10 @@ compile_commands.json
 # CLion
 /.idea
 *.clang-format
+
+build
+node_modules
+cache
+.cache
+dist
 /install
