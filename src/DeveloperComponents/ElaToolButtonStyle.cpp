@@ -14,7 +14,9 @@ ElaToolButtonStyle::ElaToolButtonStyle(QStyle* style)
     _pExpandIconRotate = 0;
     _pBorderRadius = 4;
     _themeMode = eTheme->getThemeMode();
-    connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) { _themeMode = themeMode; });
+    connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) {
+        _themeMode = themeMode;
+    });
 }
 
 ElaToolButtonStyle::~ElaToolButtonStyle()
@@ -222,9 +224,14 @@ void ElaToolButtonStyle::_drawIcon(QPainter* painter, QRectF iconRect, const QSt
         {
             // 绘制ElaIcon
             painter->save();
-            painter->setPen(bopt->state.testFlag(QStyle::State_Enabled) ?
-                ElaThemeColor(_themeMode, BasicText) :
-                ElaThemeColor(_themeMode, BasicTextDisable));
+            if (bopt->state.testFlag(QStyle::State_Enabled))
+            {
+                painter->setPen(ElaThemeColor(_themeMode, BasicText));
+            }
+            else
+            {
+                painter->setPen(ElaThemeColor(_themeMode, BasicTextDisable));
+            }
             QFont iconFont = QFont("ElaAwesome");
             switch (bopt->toolButtonStyle)
             {
@@ -270,9 +277,14 @@ void ElaToolButtonStyle::_drawText(QPainter* painter, QRect contentRect, const Q
 {
     if (!bopt->text.isEmpty())
     {
-        painter->setPen(bopt->state.testFlag(QStyle::State_Enabled) ?
-           ElaThemeColor(_themeMode, BasicText) :
-           ElaThemeColor(_themeMode, BasicTextDisable));
+        if (bopt->state.testFlag(QStyle::State_Enabled))
+        {
+            painter->setPen(ElaThemeColor(_themeMode, BasicText));
+        }
+        else
+        {
+            painter->setPen(ElaThemeColor(_themeMode, BasicTextDisable));
+        }
         switch (bopt->toolButtonStyle)
         {
         case Qt::ToolButtonTextOnly:
