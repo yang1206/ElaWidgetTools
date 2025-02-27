@@ -1,5 +1,7 @@
 ﻿#include "T_Icon.h"
 
+#include "ElaIcon.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QHeaderView>
@@ -11,6 +13,8 @@
 #include "ElaMessageBar.h"
 #include "T_IconDelegate.h"
 #include "T_IconModel.h"
+
+#include <QLabel>
 T_Icon::T_Icon(QWidget* parent)
     : T_BasePage(parent)
 {
@@ -18,6 +22,15 @@ T_Icon::T_Icon(QWidget* parent)
     setWindowTitle("ElaIcon");
     // 顶部元素
     createCustomWidget("一堆常用图标被放置于此，左键单击以复制其枚举");
+
+    // 添加 RemixIcon 测试标签
+   auto _testIconLabel = new QLabel(this);
+    _testIconLabel->setFixedSize(40, 40);
+    _testIconLabel->move(10, 10);
+
+    // 使用 getInstance() 获取 ElaIcon 实例
+    QIcon remixIcon = ElaIcon::getInstance()->getRemixIcon(RemixIconType::Text);
+    _testIconLabel->setPixmap(remixIcon.pixmap(24, 24));
 
     _metaEnum = QMetaEnum::fromType<ElaIconType::IconName>();
     QWidget* centralWidget = new QWidget(this);

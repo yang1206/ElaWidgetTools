@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/include">
         <file>Font/ElaAwesome.ttf</file>
+        <file>Font/RemixIcon.ttf</file>
         <file>Image/Cirno.jpg</file>
         <file>Image/Moon.jpg</file>
         <file>Image/noise.png</file>

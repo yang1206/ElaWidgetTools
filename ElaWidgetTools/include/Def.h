@@ -3516,4 +3516,24 @@ enum IconName
 };
 Q_ENUM_CREATE(IconName)
 Q_END_ENUM_CREATE(ElaIconType)
+
+// 添加 RemixIcon 图标枚举
+Q_BEGIN_ENUM_CREATE(RemixIconType)
+enum IconName {
+    None = 0x0,
+    Text = 0xea2c
+
+,
+};
+Q_ENUM_CREATE(IconName)
+Q_END_ENUM_CREATE(RemixIconType)
+
+Q_BEGIN_ENUM_CREATE(ElaFontType)
+enum FontFamily {
+    FontAwesome = 0,
+    RemixIcon = 1
+};
+Q_ENUM_CREATE(FontFamily)
+Q_END_ENUM_CREATE(ElaFontType)
+
 #endif // DEF_H
