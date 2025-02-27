@@ -13,6 +13,8 @@ class ElaSpinBox;
 class ElaSlider;
 class ElaRadioButton;
 class ElaProgressBar;
+class ElaPushButton;
+class ElaLineEdit;
 class T_BaseComponents : public T_BasePage
 {
     Q_OBJECT
@@ -37,6 +39,8 @@ private:
     ElaSlider* _slider{nullptr};
     ElaRadioButton* _radioButton{nullptr};
     ElaProgressBar* _progressBar{nullptr};
+    ElaPushButton* _pushButton{nullptr};
+    ElaLineEdit* _lineEdit{nullptr};
 };
 
 #endif // T_BASECOMPONENTS_H

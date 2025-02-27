@@ -26,10 +26,10 @@ Linux为QT5.15以上)，推荐版本为QT6.4.3和QT6.6.2；
 ## 主界面预览
 
 <div align=center>
-  <img src="doc/preview/ElaWidgetTools_Light.png">
+  <img src="docs/preview/ElaWidgetTools_Light.png">
 </div>
 <div align=center>
-  <img src="doc/preview/ElaWidgetTools_Dark.png">
+  <img src="docs/preview/ElaWidgetTools_Dark.png">
 </div> 
 
 ## 支持的组件

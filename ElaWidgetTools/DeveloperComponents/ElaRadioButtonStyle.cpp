@@ -30,11 +30,16 @@ void ElaRadioButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         buttonRect.adjust(1, 1, -1, -1);
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+        bool isEnabled = bopt->state & QStyle::State_Enabled;
 
         if (bopt->state & QStyle::State_Off)
         {
-            painter->setPen(QPen(ElaThemeColor(_themeMode, BasicBorder), 1.5));
-            if (bopt->state & QStyle::State_MouseOver)
+            painter->setPen(QPen(isEnabled
+                                         ? ElaThemeColor(_themeMode, BasicBorder)
+                                         : ElaThemeColor(_themeMode, BasicDisable), 1.5));
+            if (!isEnabled) {
+                painter->setBrush(ElaThemeColor(_themeMode, BasicDisable));
+            } else if (bopt->state & QStyle::State_MouseOver)
             {
                 painter->setBrush(ElaThemeColor(_themeMode, BasicHover));
             }
@@ -48,27 +53,32 @@ void ElaRadioButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         {
             painter->setPen(Qt::NoPen);
             // 外圆形
-            painter->setBrush(ElaThemeColor(_themeMode, PrimaryNormal));
+            painter->setBrush(isEnabled ?
+                ElaThemeColor(_themeMode, PrimaryNormal) :
+                ElaThemeColor(_themeMode, BasicDisable));
             painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 2, buttonRect.width() / 2);
             // 内圆形
-            painter->setBrush(ElaThemeColor(_themeMode, BasicTextInvert));
-            if (bopt->state & QStyle::State_Sunken)
+            painter->setBrush(isEnabled ?
+                ElaThemeColor(_themeMode, BasicTextInvert) :
+                ElaThemeColor(_themeMode, BasicTextDisable));
+            if (isEnabled) {
+                if (bopt->state & QStyle::State_Sunken) {
+                    if (bopt->state & QStyle::State_MouseOver) {
+                        painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1),
+                                             buttonRect.width() / 4.5, buttonRect.width() / 4.5);
+                    }
+                } else {
+                    if (bopt->state & QStyle::State_MouseOver) {
+                        painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1),
+                                             buttonRect.width() / 3.5, buttonRect.width() / 3.5);
+                    } else {
+                        painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1),
+                                             buttonRect.width() / 4, buttonRect.width() / 4);
+                    }
+                }
+            } else
             {
-                if (bopt->state & QStyle::State_MouseOver)
-                {
-                    painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 4.5, buttonRect.width() / 4.5);
-                }
-            }
-            else
-            {
-                if (bopt->state & QStyle::State_MouseOver)
-                {
-                    painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 3.5, buttonRect.width() / 3.5);
-                }
-                else
-                {
-                    painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 4, buttonRect.width() / 4);
-                }
+                painter->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 4, buttonRect.width() / 4);
             }
         }
         painter->restore();
