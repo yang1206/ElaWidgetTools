@@ -3521,17 +3521,34 @@ Q_END_ENUM_CREATE(ElaIconType)
 Q_BEGIN_ENUM_CREATE(RemixIconType)
 enum IconName {
     None = 0x0,
-    Text = 0xea2c
-
-,
+    ArrowLeftUpLine = 0xea66,
+    ArrowUpLine = 0xEA76,
+    ArrowRightUpLine = 0xEA70,
+    ArrowRightLine = 0xEA6c,
+    ArrowRightDownLine = 0xEA6A,
+    ArrowDownLine = 0xEA4C,
+    ArrowLeftDownLine = 0xEA5E,
+    ArrowLeftLine = 0xEA60,
 };
 Q_ENUM_CREATE(IconName)
 Q_END_ENUM_CREATE(RemixIconType)
 
+// 添加 RemixIcon 图标枚举
+Q_BEGIN_ENUM_CREATE(MaterialIconType)
+enum IconName {
+    AcUnit = 0xeb3b,
+    AccessAlarm = 0xeb3c,
+    AccessAlarms = 0xeb3d,
+};
+Q_ENUM_CREATE(IconName)
+Q_END_ENUM_CREATE(MaterialIconType)
+
 Q_BEGIN_ENUM_CREATE(ElaFontType)
 enum FontFamily {
-    FontAwesome = 0,
-    RemixIcon = 1
+    FontAwesome = 0x0000,
+    RemixIcon = 0x0001,
+    MaterialIcon = 0x0002
+
 };
 Q_ENUM_CREATE(FontFamily)
 Q_END_ENUM_CREATE(ElaFontType)

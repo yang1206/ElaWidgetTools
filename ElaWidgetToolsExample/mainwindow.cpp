@@ -142,9 +142,9 @@ void MainWindow::initEdgeLayout()
     toolBar->addWidget(toolButton2);
     toolBar->addSeparator();
     ElaToolButton* toolButton3 = new ElaToolButton(this);
-    toolButton3->setElaIcon(ElaIconType::Bluetooth);
+    toolButton3->setElaIcon(RemixIconType::ArrowRightLine);
     toolButton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolButton3->setText("Bluetooth");
+    toolButton3->setText("ArrowRightLine");
     toolBar->addWidget(toolButton3);
     ElaToolButton* toolButton4 = new ElaToolButton(this);
     toolButton4->setElaIcon(ElaIconType::BringFront);

@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "Def.h"
 #include "stdafx.h"
 class ElaToolButton;
 class ElaToolButtonStyle;
@@ -16,6 +17,7 @@ public:
 
 private:
     ElaToolButtonStyle* _toolButtonStyle{nullptr};
+    ElaFontType::FontFamily _iconFontType{ElaFontType::FontAwesome};
 };
 
 #endif // ELATOOLBUTTONPRIVATE_H

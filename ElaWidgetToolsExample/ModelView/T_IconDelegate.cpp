@@ -32,12 +32,27 @@ void T_IconDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     {
         return;
     }
-    QString iconName = iconList.at(0);
+    QString fullIconName = iconList.at(0);
     QString iconValue = iconList.at(1);
+
+    QStringList parts = fullIconName.split(":");
+    if (parts.size() != 2) {
+        return;
+    }
+
+    QString iconType = parts[0];
+    QString iconName = parts[1];
+
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     painter->save();
-    QFont iconFont = QFont("ElaAwesome");
+    // 根据图标类型选择不同的字体
+    QFont iconFont;
+    if (iconType == "ElaIcon") {
+        iconFont = QFont("ElaAwesome");
+    } else if (iconType == "RemixIcon") {
+        iconFont = QFont("RemixIcon");
+    }
     iconFont.setPixelSize(22);
     painter->setFont(iconFont);
     painter->setPen(ElaThemeColor(_themeMode, BasicText));
@@ -68,6 +83,22 @@ void T_IconDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     {
         painter->drawText(option.rect.x() + option.rect.width() / 2 - painter->fontMetrics().horizontalAdvance(iconName) / 2, option.rect.y() + option.rect.height() - 20, iconName);
     }
+
+
+    // 添加图标类型标识
+    if (iconType == "RemixIcon") {
+        QFont typeFont = painter->font();
+        typeFont.setPixelSize(10);
+        painter->setFont(typeFont);
+        painter->setPen(ElaThemeColor(_themeMode, PrimaryNormal));
+        QString typeText = "Remix";
+        painter->drawText(
+            option.rect.x() + option.rect.width() / 2 - painter->fontMetrics().horizontalAdvance(typeText) / 2,
+            option.rect.y() + 15,
+            typeText
+        );
+    }
+
     painter->restore();
 }
 

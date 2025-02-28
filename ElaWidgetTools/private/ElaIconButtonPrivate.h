@@ -15,6 +15,7 @@ class ElaIconButtonPrivate : public QObject
     Q_PROPERTY_CREATE_D(int, BorderRadius)
     Q_PROPERTY_CREATE_D(qreal, Opacity);
     Q_PROPERTY_CREATE_D(ElaIconType::IconName, Awesome)
+    Q_PROPERTY_CREATE_D(RemixIconType::IconName, RemixIcon)
     Q_PROPERTY_CREATE_D(QColor, LightHoverColor);
     Q_PROPERTY_CREATE_D(QColor, DarkHoverColor);
     Q_PROPERTY_CREATE_D(QColor, LightIconColor);
@@ -31,6 +32,7 @@ private:
     QPixmap _iconPix;
     bool _isAlphaAnimationFinished{true};
     ElaThemeType::ThemeMode _themeMode;
+    ElaFontType::FontFamily _iconFontType{ElaFontType::FontAwesome};
 };
 
 #endif // ELAICONBUTTONPRIVATE_H

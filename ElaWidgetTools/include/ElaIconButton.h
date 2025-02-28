@@ -25,9 +25,20 @@ public:
     ElaIconButton(ElaIconType::IconName awesome, QWidget* parent = nullptr);
     ElaIconButton(ElaIconType::IconName awesome, int pixelSize, QWidget* parent = nullptr);
     ElaIconButton(ElaIconType::IconName awesome, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
+
+    // 新增RemixIcon构造函数
+    ElaIconButton(RemixIconType::IconName remix, bool isRemix, QWidget* parent = nullptr);
+    ElaIconButton(RemixIconType::IconName remix, int pixelSize, bool isRemix, QWidget* parent = nullptr);
+    ElaIconButton(RemixIconType::IconName remix, int pixelSize, int fixedWidth, int fixedHeight, bool isRemix, QWidget* parent = nullptr);
+
     ~ElaIconButton();
     void setAwesome(ElaIconType::IconName awesome);
+    void setRemixIcon(RemixIconType::IconName remix);
+    void setIconFont(ElaFontType::FontFamily fontType);
+
+    ElaFontType::FontFamily getIconFont() const;
     ElaIconType::IconName getAwesome() const;
+    RemixIconType::IconName getRemixIcon() const;
 
     void setPixmap(QPixmap pix);
 

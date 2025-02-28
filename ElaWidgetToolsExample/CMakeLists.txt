@@ -93,6 +93,70 @@ if (QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${PROJECT_NAME})
 endif ()
 
+# 添加以下代码，用于复制运行时依赖到构建目录
+if (WIN32)
+    # 定义构建目录中可执行文件所在的目录
+    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+
+    # 复制 Qt 依赖 DLL 到构建目录
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            # 创建必要的子目录
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/platforms"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/generic"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/imageformats"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/styles"
+
+            # 复制 Qt 平台插件
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${QT_SDK_DIR}/plugins/platforms/qwindows.dll"
+            "${EXECUTABLE_OUTPUT_PATH}/platforms/"
+
+            # 复制 Qt 触摸插件
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${QT_SDK_DIR}/plugins/generic/qtuiotouchplugin.dll"
+            "${EXECUTABLE_OUTPUT_PATH}/generic/"
+
+            # 复制 Qt 样式插件
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${QT_SDK_DIR}/plugins/styles/qmodernwindowsstyle.dll"
+            "${EXECUTABLE_OUTPUT_PATH}/styles/"
+
+            # 复制 Qt 核心 DLL
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${QT_SDK_DIR}/bin/Qt${QT_VERSION_MAJOR}Widgets.dll"
+            "${QT_SDK_DIR}/bin/Qt${QT_VERSION_MAJOR}Core.dll"
+            "${QT_SDK_DIR}/bin/Qt${QT_VERSION_MAJOR}Gui.dll"
+            "${QT_SDK_DIR}/bin/Qt${QT_VERSION_MAJOR}Network.dll"
+            "${QT_SDK_DIR}/bin/Qt${QT_VERSION_MAJOR}Xml.dll"
+            "${EXECUTABLE_OUTPUT_PATH}/"
+    )
+
+    # 复制项目 DLL
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:ElaWidgetTools>"
+            "${EXECUTABLE_OUTPUT_PATH}/"
+    )
+
+    if (TARGET ElaPacketIO)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "$<TARGET_FILE:ElaPacketIO>"
+                "${EXECUTABLE_OUTPUT_PATH}/"
+        )
+    endif()
+
+    # 复制图像格式插件
+    foreach(imgfmt qgif qicns qico qjpeg qtga qtiff qwbmp qwebp)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${QT_SDK_DIR}/plugins/imageformats/${imgfmt}.dll"
+                "${EXECUTABLE_OUTPUT_PATH}/imageformats/"
+        )
+    endforeach()
+endif()
+
+
 if (WIN32)
     include(GNUInstallDirs)
     install(TARGETS ${PROJECT_NAME}

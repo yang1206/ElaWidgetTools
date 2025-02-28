@@ -23,16 +23,8 @@ T_Icon::T_Icon(QWidget* parent)
     // 顶部元素
     createCustomWidget("一堆常用图标被放置于此，左键单击以复制其枚举");
 
-    // 添加 RemixIcon 测试标签
-   auto _testIconLabel = new QLabel(this);
-    _testIconLabel->setFixedSize(40, 40);
-    _testIconLabel->move(10, 10);
-
-    // 使用 getInstance() 获取 ElaIcon 实例
-    QIcon remixIcon = ElaIcon::getInstance()->getRemixIcon(RemixIconType::Text);
-    _testIconLabel->setPixmap(remixIcon.pixmap(24, 24));
-
-    _metaEnum = QMetaEnum::fromType<ElaIconType::IconName>();
+    _elaIconMetaEnum = QMetaEnum::fromType<ElaIconType::IconName>();
+    _remixIconMetaEnum = QMetaEnum::fromType<RemixIconType::IconName>();
     QWidget* centralWidget = new QWidget(this);
     QVBoxLayout* centerVLayout = new QVBoxLayout(centralWidget);
     centerVLayout->setContentsMargins(0, 0, 5, 0);
@@ -85,12 +77,23 @@ void T_Icon::onSearchEditTextEdit(const QString& searchText)
         return;
     }
     QStringList searchKeyList;
-    for (int i = 1; i < _metaEnum.keyCount(); i++)
+    // 搜索ElaIcon
+    for (int i = 1; i < _elaIconMetaEnum.keyCount(); i++)
     {
-        QString key = QString(_metaEnum.key(i));
+        QString key = QString(_elaIconMetaEnum.key(i));
         if (key.contains(searchText, Qt::CaseInsensitive))
         {
-            searchKeyList.append(key);
+            searchKeyList.append("ElaIcon:" + key);
+        }
+    }
+
+    // 搜索RemixIcon
+    for (int i = 1; i < _remixIconMetaEnum.keyCount(); i++)
+    {
+        QString key = QString(_remixIconMetaEnum.key(i));
+        if (key.contains(searchText, Qt::CaseInsensitive))
+        {
+            searchKeyList.append("RemixIcon:" + key);
         }
     }
     _iconModel->setIsSearchMode(true);

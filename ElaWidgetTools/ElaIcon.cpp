@@ -1,6 +1,8 @@
 #include "ElaIcon.h"
 #include <QPainter>
 #include <QPixmap>
+#include <QFontDatabase>
+#include <QDebug>
 
 Q_SINGLETON_CREATE_CPP(ElaIcon)
 
@@ -12,6 +14,8 @@ ElaIcon::ElaIcon()
 ElaIcon::~ElaIcon()
 {
 }
+
+
 
 void ElaIcon::initFontConfigs()
 {

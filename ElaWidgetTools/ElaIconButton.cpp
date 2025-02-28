@@ -114,6 +114,82 @@ ElaIconButton::ElaIconButton(ElaIconType::IconName awesome, int pixelSize, int f
     connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) { d->_themeMode = themeMode; });
 }
 
+ElaIconButton::ElaIconButton(RemixIconType::IconName remix, bool isRemix, QWidget* parent)
+    : QPushButton(parent), d_ptr(new ElaIconButtonPrivate())
+{
+    Q_D(ElaIconButton);
+    d->q_ptr = this;
+    d->_pHoverAlpha = 0;
+    d->_pOpacity = 1;
+    d->_pLightHoverColor = ElaThemeColor(ElaThemeType::Light, BasicHoverAlpha);
+    d->_pDarkHoverColor = ElaThemeColor(ElaThemeType::Dark, BasicHoverAlpha);
+    d->_pLightIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pLightHoverIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkHoverIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pIsSelected = false;
+    d->_pBorderRadius = 0;
+    d->_themeMode = eTheme->getThemeMode();
+    QFont iconFont = QFont("RemixIcon");
+    iconFont.setPixelSize(15);
+    this->setFont(iconFont);
+    d->_pRemixIcon = remix;
+    this->setText(QChar((unsigned short)remix));
+    connect(this, &ElaIconButton::pIsSelectedChanged, this, [=]() { update(); });
+    connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) { d->_themeMode = themeMode; });
+}
+
+ElaIconButton::ElaIconButton(RemixIconType::IconName remix, int pixelSize, bool isRemix, QWidget* parent)
+    : QPushButton(parent), d_ptr(new ElaIconButtonPrivate())
+{
+    Q_D(ElaIconButton);
+    d->q_ptr = this;
+    d->_pHoverAlpha = 0;
+    d->_pOpacity = 1;
+    d->_pLightHoverColor = ElaThemeColor(ElaThemeType::Light, BasicHoverAlpha);
+    d->_pDarkHoverColor = ElaThemeColor(ElaThemeType::Dark, BasicHoverAlpha);
+    d->_pLightIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pLightHoverIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkHoverIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pIsSelected = false;
+    d->_pBorderRadius = 0;
+    d->_themeMode = eTheme->getThemeMode();
+    QFont iconFont = QFont("RemixIcon");
+    iconFont.setPixelSize(pixelSize);
+    this->setFont(iconFont);
+    d->_pRemixIcon = remix;
+    this->setText(QChar((unsigned short)remix));
+    connect(this, &ElaIconButton::pIsSelectedChanged, this, [=]() { update(); });
+    connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) { d->_themeMode = themeMode; });
+}
+
+ElaIconButton::ElaIconButton(RemixIconType::IconName remix, int pixelSize, int fixedWidth, int fixedHeight, bool isRemix, QWidget* parent)
+    : QPushButton(parent), d_ptr(new ElaIconButtonPrivate())
+{
+    Q_D(ElaIconButton);
+    d->q_ptr = this;
+    d->_pHoverAlpha = 0;
+    d->_pOpacity = 1;
+    d->_pLightHoverColor = ElaThemeColor(ElaThemeType::Light, BasicHoverAlpha);
+    d->_pDarkHoverColor = ElaThemeColor(ElaThemeType::Dark, BasicHoverAlpha);
+    d->_pLightIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pLightHoverIconColor = ElaThemeColor(ElaThemeType::Light, BasicText);
+    d->_pDarkHoverIconColor = ElaThemeColor(ElaThemeType::Dark, BasicText);
+    d->_pIsSelected = false;
+    d->_pBorderRadius = 0;
+    d->_themeMode = eTheme->getThemeMode();
+    QFont iconFont = QFont("RemixIcon");
+    iconFont.setPixelSize(pixelSize);
+    this->setFont(iconFont);
+    d->_pRemixIcon = remix;
+    this->setText(QChar((unsigned short)remix));
+    this->setFixedSize(fixedWidth, fixedHeight);
+    connect(this, &ElaIconButton::pIsSelectedChanged, this, [=]() { update(); });
+    connect(eTheme, &ElaTheme::themeModeChanged, this, [=](ElaThemeType::ThemeMode themeMode) { d->_themeMode = themeMode; });
+}
+
 ElaIconButton::~ElaIconButton()
 {
 }
@@ -125,10 +201,37 @@ void ElaIconButton::setAwesome(ElaIconType::IconName awesome)
     this->setText(QChar((unsigned short)awesome));
 }
 
+void ElaIconButton::setRemixIcon(RemixIconType::IconName remix)
+{
+    Q_D(ElaIconButton);
+    d->_pRemixIcon = remix;
+    this->setText(QChar((unsigned short)remix));
+}
+
 ElaIconType::IconName ElaIconButton::getAwesome() const
 {
     return this->d_ptr->_pAwesome;
 }
+
+RemixIconType::IconName ElaIconButton::getRemixIcon() const
+{
+    return this->d_ptr->_pRemixIcon;
+}
+
+void ElaIconButton::setIconFont(ElaFontType::FontFamily fontType)
+{
+    Q_D(ElaIconButton);
+    d->_iconFontType = fontType;
+    QFont iconFont = QFont(fontType == ElaFontType::FontAwesome ? "ElaAwesome" : "RemixIcon");
+    iconFont.setPixelSize(15);
+    this->setFont(iconFont);
+}
+
+ElaFontType::FontFamily ElaIconButton::getIconFont() const
+{
+    return this->d_ptr->_iconFontType;
+}
+
 
 void ElaIconButton::setPixmap(QPixmap pix)
 {

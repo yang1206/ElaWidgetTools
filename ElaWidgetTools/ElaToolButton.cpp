@@ -77,8 +77,24 @@ void ElaToolButton::setMenu(ElaMenu* menu)
 
 void ElaToolButton::setElaIcon(ElaIconType::IconName icon)
 {
+    Q_D(ElaToolButton);
+    d->_iconFontType = ElaFontType::FontAwesome;
     setProperty("ElaIconType", QChar((unsigned short)icon));
-    setIcon(ElaIcon::getInstance()->getElaIcon(ElaIconType::Broom, 1));
+    setIcon(ElaIcon::getInstance()->getElaIcon(icon, 1));
+}
+
+void ElaToolButton::setElaIcon(RemixIconType::IconName icon)
+{
+    Q_D(ElaToolButton);
+    d->_iconFontType = ElaFontType::RemixIcon;
+    setProperty("ElaIconType", QChar((unsigned short)icon));
+    setIcon(ElaIcon::getInstance()->getRemixIcon(icon, 1));
+}
+
+ElaFontType::FontFamily ElaToolButton::getIconFontType() const
+{
+    Q_D(const ElaToolButton);
+    return d->_iconFontType;
 }
 
 bool ElaToolButton::eventFilter(QObject* watched, QEvent* event)

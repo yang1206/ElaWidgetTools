@@ -17,7 +17,8 @@ public:
     Q_SLOT void onSearchEditTextEdit(const QString& searchText);
 
 private:
-    QMetaEnum _metaEnum;
+    QMetaEnum _elaIconMetaEnum;  // 改名为_elaIconMetaEnum
+    QMetaEnum _remixIconMetaEnum; // 添加RemixIcon元数据枚举
     ElaLineEdit* _searchEdit{nullptr};
     ElaListView* _iconView;
     T_IconModel* _iconModel;

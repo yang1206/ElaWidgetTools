@@ -22,7 +22,9 @@ public:
 
     void setMenu(ElaMenu* menu);
     void setElaIcon(ElaIconType::IconName icon);
+    void setElaIcon(RemixIconType::IconName icon);
 
+    ElaFontType::FontFamily getIconFontType() const;
 protected:
     virtual bool eventFilter(QObject* watched, QEvent* event) override;
 };

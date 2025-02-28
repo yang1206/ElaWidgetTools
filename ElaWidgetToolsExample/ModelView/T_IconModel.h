@@ -20,9 +20,12 @@ public:
     QString getIconNameFromModelIndex(const QModelIndex& index) const;
 
 private:
-    QMetaEnum _metaEnum;
+    QMetaEnum _elaIconMetaEnum;  // 改名
+    QMetaEnum _remixIconMetaEnum; // 添加RemixIcon元数据枚举
     QStringList _searchKeyList;
     int _rowCount;
+    int _elaIconCount;  // ElaIcon的数量
+    int _remixIconCount; // RemixIcon的数量
 };
 
 #endif // T_ICONMODEL_H
