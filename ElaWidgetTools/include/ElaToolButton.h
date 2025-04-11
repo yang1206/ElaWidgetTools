@@ -6,27 +6,38 @@
 #include "Def.h"
 class ElaMenu;
 class ElaToolButtonPrivate;
-class ELA_EXPORT ElaToolButton : public QToolButton
-{
+
+class ELA_EXPORT ElaToolButton : public QToolButton {
     Q_OBJECT
     Q_Q_CREATE(ElaToolButton)
     Q_PROPERTY_CREATE_Q_H(int, BorderRadius);
+
     Q_PROPERTY_CREATE_Q_H(bool, IsSelected);
 
 public:
-    explicit ElaToolButton(QWidget* parent = nullptr);
+    explicit ElaToolButton(QWidget *parent = nullptr);
+
     ~ElaToolButton();
 
     void setIsTransparent(bool isTransparent);
+
     bool getIsTransparent() const;
 
-    void setMenu(ElaMenu* menu);
+    void setMenu(ElaMenu *menu);
+
     void setElaIcon(ElaIconType::IconName icon);
+
     void setElaIcon(RemixIconType::IconName icon);
 
+    virtual void setEnabled(bool enabled);
+
     ElaFontType::FontFamily getIconFontType() const;
+
+Q_SIGNALS:
+    void enabledChanged(bool enabled);
+
 protected:
-    virtual bool eventFilter(QObject* watched, QEvent* event) override;
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 #endif // ELATOOLBUTTON_H
